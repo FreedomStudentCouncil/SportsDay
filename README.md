@@ -1,3 +1,5 @@
+以下のコードをコピーして、mermaidchart.comに貼り付けて。
+
 ```mermaid
 %%{
   init: {
@@ -20,7 +22,8 @@
     }
   }
 }%%
-
+%%https://www.mermaidchart.com/app/projects/ac2f23ea-8d8e-4547-ac56-53fa4465c145/diagrams/bc6e1669-b070-45f3-8cb2-6ec829726b94/version/v0.1/edit
+%%ELKのレンダリングを使わないとぐちゃぐちゃになるので、mermaidchart.comを使ってください。
 graph LR
     %% 入力系統
     subgraph Input["入力系統"]
@@ -80,10 +83,10 @@ graph LR
             style OutputButtons fill:#ffeeba,stroke:#d6b656
             大型映像装置(大型映像装置):::matrixButton
             VE_OUT(VE MONI):::matrixButton
-            AV1(AV Mixer 入力1):::matrixButton
-            AV2(AV Mixer 入力2):::matrixButton
-            AV3(AV Mixer 入力3):::matrixButton
-            AV4(AV Mixer 入力4):::matrixButton
+            AV1(AV Mixer 入力1 _):::matrixButton
+            AV2(AV Mixer 入力2 _):::matrixButton
+            AV3(AV Mixer 入力3 _):::matrixButton
+            AV4(AV Mixer 入力4 _):::matrixButton
         end
         
         ICW --> S
@@ -158,7 +161,13 @@ graph LR
         subgraph Pattern
             CHROMAKEY
         end
+
+        subgraph Audio
+            AudioGain
+        end
     end
+
+    NTSC-->AudioGain
     
     %% 出力モニタ
     subgraph OutputMonitor["23型出力映像確認モニタ"]
@@ -174,8 +183,11 @@ graph LR
             style MiddleOut fill:#f2f2f2,stroke:#4d4d4d
             SDI1(SDI1):::sdiNode
             SDI2(SDI2):::sdiNode
-            SDI3(SDI3):::sdiNode
-            SDI4(SDI4):::sdiNode
+            subgraph VEish[VEモニタと連携可能]
+                SDI3(SDI3):::sdiNode
+                SDI4(SDI4):::sdiNode
+            end
+            
         end
     end
     
@@ -185,8 +197,8 @@ graph LR
     AV3 -.-|対応| SDI3
     AV4 -.-|対応| SDI4
     
-    VE_SDI3 ==>|映像入力| SDI3
-    VE_SDI4 ==>|映像入力| SDI4
+    VE_SDI3 ==>|対応| SDI3
+    VE_SDI4 ==>|対応| SDI4
     
     SDI1 -->|映像信号3| FourButton
     SDI2 -->|映像信号4| FourButton
